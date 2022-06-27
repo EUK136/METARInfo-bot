@@ -1,10 +1,11 @@
-# METARInfo BOT
+
+<div align="center"><img width="200" height="200" src="https://ivaobot.a2hosted.com/images/icon_metarbot.png">
+<h1>METARInfo BOT<h1>
+</div>
 
 ---
 
-<p>
-A simple bot to get METAR and TAF information from any airport in the world
-</p>
+A simple bot to get METAR and TAF information from any airport in the world, you can find the bot in the following link [METARInfo BOT](http://t.me/MetarInfo_bot)
 
 ---
 
@@ -13,3 +14,7 @@ A simple bot to get METAR and TAF information from any airport in the world
 [ ] Catch error at ICAO code
 
 [ ] Catch the error when no information found 
+
+[ ] Include airport information
+
+[ ] Design new logo 
