@@ -1,4 +1,3 @@
-from ast import If
 import os
 import telebot
 import requests
@@ -35,22 +34,28 @@ def cmd_start(message):
 def cmd_metar(message):
     slice_object = slice(7,11)
     icao = message.text[slice_object]
-    if icao < 4:
+    if len(icao) < 4:
         texto = 'You must insert an ICAO code'
         bot.send_message(message.chat.id, texto, parse_mode='MarkdownV2')
     else:
         r = requests.get(f"https://avwx.rest/api/metar/{icao}?format=json&onfail=cache", headers={ 'Authorization': 'TOKEN '+metar_token })
         respuesta = r.json()
-        bot.send_message(message.chat.id, "Metar: "+respuesta['sanitized'])
+        metar = respuesta['sanitized']
+        respuesta_mrk = f'**METAR**: {metar}'
+        bot.send_message(message.chat.id, respuesta_mrk, parse_mode='MarkdownV2')
 
 #Respuesta a taf
 @bot.message_handler(commands=["taf"])
 def cmd_metar(message):
     slice_object = slice(5,9)
     icao = message.text[slice_object]
-    r = requests.get(f"https://avwx.rest/api/taf/{icao}?format=json&onfail=cache", headers={ 'Authorization': 'TOKEN '+metar_token })
-    respuesta = r.json()
-    bot.send_message(message.chat.id, "Taf: "+respuesta['sanitized'])
+    if len(icao) < 4:
+        texto = 'You must insert an ICAO code'
+        bot.send_message(message.chat.id, texto, parse_mode='MarkdownV2')
+    else:
+        r = requests.get(f"https://avwx.rest/api/taf/{icao}?format=json&onfail=cache", headers={ 'Authorization': 'TOKEN '+metar_token })
+        respuesta = r.json()
+        bot.send_message(message.chat.id, "Taf: "+respuesta['sanitized'])
 
 
 #MAIN
