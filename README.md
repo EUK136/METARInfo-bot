@@ -18,3 +18,5 @@ A simple bot to get METAR and TAF information from any airport in the world, you
 [ ] Include airport information
 
 [ ] Design new logo 
+
+[ ] Metar by location
