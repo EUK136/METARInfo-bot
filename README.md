@@ -11,12 +11,12 @@ A simple bot to get METAR and TAF information from any airport in the world, you
 
 ### To do:
 
-[X] Catch error at ICAO code
+- [X] Catch error at ICAO code
 
-[ ] Catch the error when no information found 
+- [ ] Catch the error when no information found 
 
-[ ] Include airport information
+- [ ] Include airport information
 
-[ ] Design new logo 
+- [ ] Design new logo 
 
-[ ] Metar by location
+- [ ] Metar by location
