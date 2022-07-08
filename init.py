@@ -20,7 +20,7 @@ def cmd_start(message):
 @bot.message_handler(commands=["help"])
 def cmd_start(message):
     #Texto en formato markdown
-    texto = 'This is the bot help menu, you can use the **/metar** command or the **/taf** command followed by the ICAO to get the information' + '\n'
+    texto = 'This is the bot help menu, you can use the /metar command or the /taf command followed by the ICAO to get the information' + '\n'
     texto += '\n'
     texto += 'If you have problems reading a METAR or a TAF you can check the AEMET guide at the following link' + '\n'
     texto += '\n'
@@ -35,7 +35,7 @@ def cmd_metar(message):
     slice_object = slice(7,11)
     icao = message.text[slice_object]
     if len(icao) < 4:
-        texto = 'You must insert an ICAO code'
+        texto = 'You must insert an **ICAO** code'
         bot.send_message(message.chat.id, texto, parse_mode='MarkdownV2')
     else:
         r = requests.get(f"https://avwx.rest/api/metar/{icao}?format=json&onfail=cache", headers={ 'Authorization': 'TOKEN '+metar_token })
@@ -57,6 +57,13 @@ def cmd_metar(message):
         respuesta = r.json()
         bot.send_message(message.chat.id, "Taf: "+respuesta['sanitized'])
 
+@bot.message_handler(content_types=["location"])
+def location(location):
+    latitude = location.location.latitude
+    longitude = location.location.longitude
+    r = requests.get(f"https://avwx.rest/api/station/near/{latitude},{longitude}?n=5&airport=true&reporting=true&format=json", headers={ 'Authorization': 'TOKEN '+metar_token })
+    respuesta = r.json()
+    print(respuesta)
 
 #MAIN
 if __name__ == '__main__':

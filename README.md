@@ -11,7 +11,7 @@ A simple bot to get METAR and TAF information from any airport in the world, you
 
 ### To do:
 
-[ ] Catch error at ICAO code
+[X] Catch error at ICAO code
 
 [ ] Catch the error when no information found 
 
