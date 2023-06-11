@@ -9,6 +9,19 @@ A simple bot to get METAR and TAF information from any airport in the world, you
 
 ---
 
+Activate virtual environment
+
+```
+python -m venv tutorial-env
+```
+
+Install requirement libraries
+
+```
+pip install -r requirements. txt 
+```
+
+---
 ### To do:
 
 - [X] Catch error at ICAO code

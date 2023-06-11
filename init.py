@@ -14,6 +14,7 @@ bot = telebot.TeleBot(telegram_token)
 #Comando start
 @bot.message_handler(commands=["start"])
 def cmd_start(message):
+    print(f'El usuario {message.chat.username} agrego el bot al chat {message.chat.id}')
     bot.reply_to(message, "Welcome to METARInfo Bot, use /help to obtain commands info")
 
 #Comando ayuda
@@ -72,16 +73,20 @@ def cmd_metar(message):
 
 @bot.message_handler(content_types=["location"])
 def location(location):
+    print(f'Envio una localizacion pedido por {location.chat.username} en el chat {location.chat.id}')
     latitude = location.location.latitude
     longitude = location.location.longitude
     r = requests.get(f"https://avwx.rest/api/station/near/{latitude},{longitude}?n=5&airport=true&reporting=true&format=json", headers={ 'Authorization': 'TOKEN '+metar_token })
     respuesta = r.json()
     #airports = {}
     for station in respuesta:
-        if station["kilometers"] <= 15:
+        if station["kilometers"] <= 30:
             icao = station["station"]["icao"]
-            #airports[icao] = {"icao": icao, "nombre": station["station"]["name"]}
-            bot.send_message(location.chat.id, "ICAO: "+icao+" Name: "+station["station"]["name"])
+            r = requests.get(f"https://avwx.rest/api/metar/{icao}?format=json&onfail=cache", headers={ 'Authorization': 'TOKEN '+metar_token })
+            respuesta = r.json()
+            metar = respuesta['sanitized']
+            respuesta_mrk = f'__*METAR*__ \-\> {metar}'
+            bot.send_message(location.chat.id, respuesta_mrk, parse_mode='MarkdownV2')
 
 
 #MAIN
